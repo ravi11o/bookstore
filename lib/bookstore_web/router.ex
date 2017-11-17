@@ -20,7 +20,21 @@ defmodule BookstoreWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", BookstoreWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", BookstoreWeb.Api do
+   pipe_through :api
+
+   scope "/books" do
+     get "/", BookController, :index
+     post "/", BookController, :create
+   end
+   scope "/categories" do
+     get "/", CategoryController, :index
+     get "/:category_id", CategoryController, :show
+   end
+   scope "/persons" do
+     get "/", PersonController, :index
+     post "/", PersonController, :create
+   end
+
+  end
 end

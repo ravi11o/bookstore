@@ -2,9 +2,10 @@ defmodule Bookstore.Resource.Book do
   use Ecto.Schema
   import Ecto.Changeset
   alias Bookstore.Resource.{Book, Category, BookCategory, Recommendation, Person}
-
+  @derive {Poison.Encoder, only: [:affiliate_link, :author, :description, :name,
+    :publisher, :slug, :categories, :persons]}
   schema "books" do
-    field :afffiliate_link, :string
+    field :affiliate_link, :string
     field :author, :string
     field :description, :string
     field :name, :string
@@ -19,8 +20,8 @@ defmodule Bookstore.Resource.Book do
   @doc false
   def changeset(%Book{} = book, attrs) do
     book
-    |> cast(attrs, [:name, :slug, :author, :publisher, :description, :afffiliate_link])
-    |> validate_required([:name, :author, :publisher, :description, :afffiliate_link])
+    |> cast(attrs, [:name, :slug, :author, :publisher, :description, :affiliate_link])
+    |> validate_required([:name, :author, :publisher, :description, :affiliate_link])
     |> unique_constraint(:slug)
   end
 end
