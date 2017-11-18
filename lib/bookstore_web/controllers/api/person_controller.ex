@@ -9,8 +9,8 @@ defmodule BookstoreWeb.Api.PersonController do
     render conn, "index.json", persons: persons
   end
 
-  def show(conn, %{"person_id" => id}) do
-    person = Resource.get_person(id)
+  def show(conn, %{"slug" => slug}) do
+    person = Resource.get_person_by_slug(slug)
     render conn, "show.json", person: person
   end
 
@@ -20,7 +20,7 @@ defmodule BookstoreWeb.Api.PersonController do
       if books = Map.get(params, "books") do
         book_list =
           books
-          |> Enum.map(fn(id) -> Resource.get_book_by_id(id) end)
+          |> Enum.map(fn(id) -> Resource.get_book(id) end)
           |> List.flatten
         updated_person = Resource.update_person(person, book_list)
       end

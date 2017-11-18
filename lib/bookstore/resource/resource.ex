@@ -12,9 +12,16 @@ defmodule Bookstore.Resource do
     |> Repo.all
   end
 
-  def get_book_by_id(id) do
+  def get_book(id) do
     Book
     |> where([b], b.id == ^id)
+    |> preload([:persons, :categories])
+    |> Repo.one
+  end
+
+  def get_book_by_slug(slug) do
+    Book
+    |> where([b], b.slug == ^slug)
     |> preload([:persons, :categories])
     |> Repo.one
   end
@@ -46,9 +53,9 @@ defmodule Bookstore.Resource do
     |> Repo.insert
   end
 
-  def get_person(id) do
+  def get_person_by_slug(slug) do
     Person
-    |> where([p], p.id == ^id)
+    |> where([p], p.slug == ^slug)
     |> preload(:books)
     |> Repo.one
   end
@@ -73,6 +80,13 @@ defmodule Bookstore.Resource do
   def get_category(id) do
     Category
     |> where([c], c.id == ^id)
+    |> preload(:books)
+    |> Repo.one
+  end
+
+  def get_category_by_slug(slug) do
+    Category
+    |> where([c], c.slug == ^slug)
     |> preload(:books)
     |> Repo.one
   end
