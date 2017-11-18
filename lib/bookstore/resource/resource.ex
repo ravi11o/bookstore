@@ -16,14 +16,13 @@ defmodule Bookstore.Resource do
     Book
     |> where([b], b.id == ^id)
     |> preload([:persons, :categories])
-    |> Repo.all
+    |> Repo.one
   end
 
   def insert_book(params) do
-    changeset =
       %Book{}
       |> Book.changeset(params)
-    Repo.insert(changeset)
+      |> Repo.insert
   end
 
   def update_book(book, categories) do
@@ -44,11 +43,14 @@ defmodule Bookstore.Resource do
   def insert_person(params) do
     %Person{}
     |> Person.changeset(params)
-    |> Repo.insert!
+    |> Repo.insert
   end
 
   def get_person(id) do
-    Repo.get(Person, id)
+    Person
+    |> where([p], p.id == ^id)
+    |> preload(:books)
+    |> Repo.one
   end
 
   def update_person(person, books) do
@@ -72,6 +74,12 @@ defmodule Bookstore.Resource do
     Category
     |> where([c], c.id == ^id)
     |> preload(:books)
-    |> Repo.all
+    |> Repo.one
+  end
+
+  def insert_category(params) do
+    %Category{}
+    |> Category.changeset(params)
+    |> Repo.insert
   end
 end

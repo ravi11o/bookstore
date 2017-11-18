@@ -9,17 +9,26 @@ defmodule BookstoreWeb.Api.PersonController do
     render conn, "index.json", persons: persons
   end
 
-  def create(conn, params) do
-    person = Resource.insert_person(params)
-    person = person |> Repo.preload(:books)
-    if books = Map.get(params, "books") do
-      book_list =
-        books
-        |> Enum.map(fn(id) -> Resource.get_book_by_id(id) end)
-        |> List.flatten
-    end
-    updated_person = Resource.update_person(person, book_list)
-    
-    render conn, "show.json", person: updated_person || person
+  def show(conn, %{"person_id" => id}) do
+    person = Resource.get_person(id)
+    render conn, "show.json", person: person
   end
+
+  def create(conn, params) do
+    with {:ok, person} <- Resource.insert_person(params) do
+      person = person |> Repo.preload(:books)
+      if books = Map.get(params, "books") do
+        book_list =
+          books
+          |> Enum.map(fn(id) -> Resource.get_book_by_id(id) end)
+          |> List.flatten
+        updated_person = Resource.update_person(person, book_list)
+      end
+
+      render conn, "show.json", person: updated_person || person
+    else
+      {:error, _changeset} -> json conn, ["This person already exists"]
+    end
+  end
+
 end

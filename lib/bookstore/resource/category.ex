@@ -7,6 +7,7 @@ defmodule Bookstore.Resource.Category do
   schema "categories" do
     field :description, :string
     field :name, :string
+    field :slug, :string
     many_to_many :books, Book, join_through: BookCategory
 
     timestamps()
@@ -18,5 +19,11 @@ defmodule Bookstore.Resource.Category do
     |> cast(attrs, [:name, :description])
     |> validate_required([:name, :description])
     |> unique_constraint(:name)
+    |> generate_slug
+  end
+
+  defp generate_slug(changeset) do
+    name = get_change(changeset, :name)
+    put_change(changeset, :slug, Slugger.slugify_downcase(name))
   end
 end

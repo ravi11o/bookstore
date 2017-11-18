@@ -6,6 +6,7 @@ defmodule BookstoreWeb.Api.PersonView do
       id: person.id,
       name: person.name,
       photo: person.photo,
+      slug: person.slug,
       description: person.description,
       books: render_many(person.books, __MODULE__, "book.json", as: :book)
     }

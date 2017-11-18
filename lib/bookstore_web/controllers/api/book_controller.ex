@@ -10,20 +10,27 @@ defmodule BookstoreWeb.Api.BookController do
   end
 
   def create(conn, params) do
-    {:ok, book} = Resource.insert_book(params)
-    book = book |> Repo.preload([:categories, :persons])
-    if categories = Map.get(params, "categories") do
-      categories_list =
-        categories
-        |> Enum.map(fn(id) -> Resource.get_category(id) end)
-        |> List.flatten
+    with {:ok, book} <-  Resource.insert_book(params) do
+      book = book |> Repo.preload([:categories, :persons])
+      if categories = Map.get(params, "categories") do
+        categories_list =
+          categories
+          |> Enum.map(fn(id) -> Resource.get_category(id) end)
+          |> List.flatten
 
-      updated_book = Resource.update_book(book, categories_list)
+        updated_book = Resource.update_book(book, categories_list)
+      end
+      render conn, "show.json", book: updated_book || book
+    else
+      {:error, _changeset} -> json conn, ["Book with this name already exists"]
     end
 
 
-    render conn, "show.json", book: updated_book || book
+  end
 
+  def show(conn, %{"book_id" => id}) do
+    book = Resource.get_book_by_id(id)
+    render conn, "show.json", book: book
   end
 
 end

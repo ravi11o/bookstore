@@ -5,6 +5,7 @@ defmodule BookstoreWeb.Api.BookView do
     %{
       id: book.id,
       name: book.name,
+      slug: book.slug,
       author: book.author,
       publisher: book.publisher,
       affiliate_link: book.affiliate_link,
@@ -33,8 +34,7 @@ defmodule BookstoreWeb.Api.BookView do
     %{
       id: person.id,
       name: person.name,
-      photo: person.photo,
-      description: person.description
+      photo: person.photo
     }
   end
 

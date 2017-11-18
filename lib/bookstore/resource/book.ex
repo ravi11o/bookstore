@@ -23,5 +23,11 @@ defmodule Bookstore.Resource.Book do
     |> cast(attrs, [:name, :slug, :author, :publisher, :description, :affiliate_link])
     |> validate_required([:name, :author, :publisher, :description, :affiliate_link])
     |> unique_constraint(:slug)
+    |> generate_slug
+  end
+
+  defp generate_slug(changeset) do
+    name = get_change(changeset, :name)
+    put_change(changeset, :slug, Slugger.slugify_downcase(name))
   end
 end

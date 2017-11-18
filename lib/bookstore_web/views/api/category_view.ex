@@ -5,17 +5,19 @@ defmodule BookstoreWeb.Api.CategoryView do
     %{
       id: category.id,
       name: category.name,
+      slug: category.slug,
       description: category.description,
       books: render_many(category.books, __MODULE__, "book.json", as: :book)
     }
   end
 
   def render("index.json", %{categories: categories}) do
-    %{categories: render_many(categories, __MODULE__, "category.json", as: :category)}
+    IO.inspect(categories)
+    %{categories: render_many(categories, __MODULE__, "category.json")}
   end
 
   def render("show.json", %{category: category}) do
-    %{category: render_one(category, __MODULE__, "category.json", as: :category)}
+    %{category: render_one(category, __MODULE__, "category.json")}
   end
 
   def render("book.json", %{book: book}) do
