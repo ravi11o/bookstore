@@ -12,7 +12,6 @@ defmodule BookstoreWeb.Api.CategoryView do
   end
 
   def render("index.json", %{categories: categories}) do
-    IO.inspect(categories)
     %{categories: render_many(categories, __MODULE__, "category.json")}
   end
 
