@@ -2,7 +2,7 @@ defmodule Bookstore.Resource do
   import Ecto.Query
 
   alias Bookstore.Repo
-  alias Bookstore.Resource.{Book, Category, Person}
+  alias Bookstore.Resource.{Book, Category, Person, BookCategory, Recommendation}
 
 
 ####### Book Queries #############
@@ -95,5 +95,17 @@ defmodule Bookstore.Resource do
     %Category{}
     |> Category.changeset(params)
     |> Repo.insert
+  end
+
+  def select_recommended(id, slug) do
+    query =
+      from b in Book,
+      select: [:id, :name, :author, :description, :publisher],
+      join: bc in BookCategory, where: bc.book_id == b.id,
+      join: c in Category, where: c.id == bc.category_id,
+      join: r in Recommendation, where: r.book_id == b.id,
+      join: p in Person, where: p.id == r.person_id,
+      where: c.id == ^id and p.slug == ^slug
+    Repo.all(query)
   end
 end

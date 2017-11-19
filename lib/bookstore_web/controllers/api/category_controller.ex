@@ -22,4 +22,9 @@ defmodule BookstoreWeb.Api.CategoryController do
       {:error, _changeset} -> json conn, ["This category already exists"]
     end
   end
+
+  def recommended_books(conn, %{"id" => id, "name" => slug}) do
+    books  = Resource.select_recommended(id, slug)
+    render conn, "only-books.json", books: books
+  end
 end

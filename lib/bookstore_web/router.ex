@@ -32,6 +32,7 @@ defmodule BookstoreWeb.Router do
      get "/", CategoryController, :index
      post "/", CategoryController, :create
      get "/:slug", CategoryController, :show
+     get "/:id/:name", CategoryController, :recommended_books
    end
    scope "/persons" do
      get "/", PersonController, :index
