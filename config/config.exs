@@ -12,7 +12,7 @@ config :bookstore,
 # Configures the endpoint
 config :bookstore, BookstoreWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "trY/UoDetLnGnVbi6x8xWirjjNhbUScufIqT6BN8dv/0HrjKVq0uZVww5596yN3b",
+  secret_key_base: System.get_env("SECRET_KEY_BASE") || "trY/UoDetLnGnVbi6x8xWirjjNhbUScufIqT6BN8dv/0HrjKVq0uZVww5596yN3b",
   render_errors: [view: BookstoreWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Bookstore.PubSub,
            adapter: Phoenix.PubSub.PG2]
