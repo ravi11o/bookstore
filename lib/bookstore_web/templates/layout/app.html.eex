@@ -14,7 +14,7 @@
   <body>
     <div class="container">
       <header class="header">
-        <h4>Bookstore API</h4>
+        <h3>Bookstore API</h3>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
