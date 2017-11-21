@@ -70,10 +70,9 @@ defmodule Bookstore.Resource do
     |> Repo.all
   end
 
-  def insert_person(params) do
-    %Person{}
-    |> Person.changeset(params)
-    |> Repo.insert
+  def get_person(id) do
+    Person
+    |> Repo.get(id)
   end
 
   def get_person_by_slug(slug) do
@@ -83,11 +82,30 @@ defmodule Bookstore.Resource do
     |> Repo.one
   end
 
+  def insert_person(params) do
+    %Person{}
+    |> Person.changeset(params)
+    |> Repo.insert
+  end
+
+  def update_person(id, params) do
+    Person
+    |> Repo.get(id)
+    |> Person.changeset(params)
+    |> Repo.update
+  end
+
   def update_person_with_books(books, person) do
     person
     |> Ecto.Changeset.change()
     |> Ecto.Changeset.put_assoc(:books, books)
     |> Repo.update!
+  end
+
+  def delete_person(id) do
+    Person
+    |> Repo.get(id)
+    |> Repo.delete
   end
 
 
