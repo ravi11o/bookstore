@@ -5,7 +5,7 @@ defmodule BookstoreWeb.Api.CategoryController do
   alias Bookstore.Repo
 
   def index(conn, _params) do
-    categories = Resource.list_categories()
+    categories = Resource.list_categories_with_books()
     render conn, "index.json", categories: categories
   end
 

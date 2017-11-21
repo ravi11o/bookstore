@@ -8,11 +8,21 @@ defmodule Bookstore.Resource do
 ####### Book Queries #############
   def list_books() do
     Book
+    |> Repo.all
+  end
+
+  def list_books_preloaded() do
+    Book
     |> preload([:categories, :persons])
     |> Repo.all
   end
 
   def get_book(id) do
+    Book
+    |> Repo.get(id)
+  end
+
+  def get_book_preloaded(id) do
     Book
     |> where([b], b.id == ^id)
     |> preload([:persons, :categories])
@@ -32,11 +42,24 @@ defmodule Bookstore.Resource do
       |> Repo.insert
   end
 
-  def update_book(book, categories) do
+  def update_book(id, params) do
+    Book
+    |> Repo.get(id)
+    |> Book.changeset(params)
+    |> Repo.update
+  end
+
+  def update_book_with_categories(categories, book) do
     book
     |> Ecto.Changeset.change()
     |> Ecto.Changeset.put_assoc(:categories, categories)
     |> Repo.update!
+  end
+
+  def delete_book(id) do
+    Book
+    |> Repo.get(id)
+    |> Repo.delete
   end
 
 
@@ -60,7 +83,7 @@ defmodule Bookstore.Resource do
     |> Repo.one
   end
 
-  def update_person(person, books) do
+  def update_person_with_books(books, person) do
     person
     |> Ecto.Changeset.change()
     |> Ecto.Changeset.put_assoc(:books, books)
@@ -73,11 +96,21 @@ defmodule Bookstore.Resource do
 ####### Category Queries #############
   def list_categories() do
     Category
+    |> Repo.all
+  end
+
+  def list_categories_with_books() do
+    Category
     |> preload(:books)
     |> Repo.all
   end
 
   def get_category(id) do
+    Category
+    |> Repo.get(id)
+  end
+
+  def get_category_with_books(id) do
     Category
     |> where([c], c.id == ^id)
     |> preload(:books)

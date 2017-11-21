@@ -9,7 +9,7 @@ defmodule Bookstore.Resource.Person do
     field :name, :string
     field :photo, :string
     field :slug, :string
-    many_to_many :books, Book, join_through: Recommendation
+    many_to_many :books, Book, join_through: Recommendation, on_replace: :delete, on_delete: :delete_all
 
     timestamps()
   end

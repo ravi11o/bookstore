@@ -8,7 +8,7 @@ defmodule Bookstore.Resource.Category do
     field :description, :string
     field :name, :string
     field :slug, :string
-    many_to_many :books, Book, join_through: BookCategory
+    many_to_many :books, Book, join_through: BookCategory, on_delete: :delete_all
 
     timestamps()
   end

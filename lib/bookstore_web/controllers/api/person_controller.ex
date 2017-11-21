@@ -17,14 +17,13 @@ defmodule BookstoreWeb.Api.PersonController do
   def create(conn, params) do
     with {:ok, person} <- Resource.insert_person(params) do
       person = person |> Repo.preload(:books)
-      if books = Map.get(params, "books") do
-        book_list =
-          books
-          |> Enum.map(fn(id) -> Resource.get_book(id) end)
-          |> List.flatten
-        updated_person = Resource.update_person(person, book_list)
-      end
-
+      updated_person =
+        if books = Map.get(params, "books") do
+            books
+            |> Enum.map(fn(id) -> Resource.get_book_preloaded(id) end)
+            |> List.flatten
+            |> Resource.update_person_with_books(person)
+        end
       render conn, "show.json", person: updated_person || person
     else
       {:error, _changeset} -> json conn, ["This person already exists"]

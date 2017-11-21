@@ -11,8 +11,8 @@ defmodule Bookstore.Resource.Book do
     field :name, :string
     field :publisher, :string
     field :slug, :string
-    many_to_many :categories, Category, join_through: BookCategory
-    many_to_many :persons, Person, join_through: Recommendation
+    many_to_many :categories, Category, join_through: BookCategory, on_replace: :delete, on_delete: :delete_all
+    many_to_many :persons, Person, join_through: Recommendation, on_delete: :delete_all
 
     timestamps()
   end
