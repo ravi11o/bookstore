@@ -130,6 +130,19 @@ defmodule Bookstore.Resource do
     |> Repo.insert
   end
 
+  def update_category(id, params) do
+    Category
+    |> Repo.get(id)
+    |> Category.changeset(params)
+    |> Repo.update
+  end
+
+  def delete_category(id) do
+    Category
+    |> Repo.get(id)
+    |> Repo.delete
+  end
+
   def select_recommended(id, slug) do
     query =
       from b in Book,

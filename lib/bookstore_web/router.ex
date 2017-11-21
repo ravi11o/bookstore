@@ -25,22 +25,29 @@ defmodule BookstoreWeb.Router do
 
    scope "/books" do
      get "/", BookController, :index
+     get "/:slug", BookController, :show
      post "/", BookController, :create
      get "/:id/edit", BookController, :edit
      put "/:id", BookController, :update
-     get "/:slug", BookController, :show
      delete "/:id", BookController, :delete
    end
    scope "/categories" do
      get "/", CategoryController, :index
-     post "/", CategoryController, :create
      get "/:slug", CategoryController, :show
+     post "/", CategoryController, :create
+     get "/:id/edit", CategoryController, :edit
+     put "/:id", CategoryController, :update
+     delete "/:id", CategoryController, :delete
      get "/:id/:name", CategoryController, :recommended_books
    end
    scope "/persons" do
      get "/", PersonController, :index
-     post "/", PersonController, :create
      get "/:slug", PersonController, :show
+     post "/", PersonController, :create
+     get "/:id/edit", PersonController, :edit
+     put "/:id", PersonController, :update
+     delete "/:id", PersonController, :delete
+
    end
 
   end

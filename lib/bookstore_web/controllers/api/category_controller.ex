@@ -23,6 +23,31 @@ defmodule BookstoreWeb.Api.CategoryController do
     end
   end
 
+  def edit(conn, %{"id" => id}) do
+    if category = Resource.get_category(id) do
+      render conn, "only-category.json", category: category
+    else
+      json conn, "No category with this id found" 
+    end
+
+  end
+
+  def update(conn, %{"id" => id, "body" => category_params}) do
+    with{:ok, category} <- Resource.update_category(id, category_params) do
+      render conn, "only-category.json", category: category
+    else
+      {:error, _changeset} -> json conn, ["Category Update failed"]
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    with {:ok, category} <- Resource.delete_category(id) do
+      json conn, "#{category.name} deleted successfully."
+    else
+      {:error, _changeset} -> json conn, "Could not delete category."
+    end
+  end
+
   def recommended_books(conn, %{"id" => id, "name" => slug}) do
     books  = Resource.select_recommended(id, slug)
     render conn, "only-books.json", books: books

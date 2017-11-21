@@ -31,9 +31,13 @@ defmodule BookstoreWeb.Api.BookController do
   end
 
   def edit(conn, %{"id" => id}) do
-    book = Resource.get_book(id)
-    categories = Resource.list_categories()
-    render conn, "edit.json", book: book, categories: categories
+    if book = Resource.get_book(id) do
+      categories = Resource.list_categories()
+      render conn, "edit.json", book: book, categories: categories
+    else
+      json conn, ["No book with this id found"]
+    end
+
   end
 
   def update(conn, %{"id" => id, "body" => book_params}) do
