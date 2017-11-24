@@ -13,6 +13,10 @@ defmodule BookstoreWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :api_auth do
+    plug BookstoreWeb.Pipeline
+  end
+
   scope "/", BookstoreWeb do
     pipe_through :browser # Use the default browser stack
 
@@ -21,34 +25,48 @@ defmodule BookstoreWeb.Router do
 
   # Other scopes may use custom stacks.
   scope "/api", BookstoreWeb.Api do
-   pipe_through :api
+    post "/login", AuthController, :create
+    pipe_through :api
 
-   scope "/books" do
-     get "/", BookController, :index
-     get "/:slug", BookController, :show
-     post "/", BookController, :create
-     get "/:id/edit", BookController, :edit
-     put "/:id", BookController, :update
-     delete "/:id", BookController, :delete
+    scope "/books" do
+      get "/", BookController, :index
+      get "/:slug", BookController, :show
+      scope "/" do
+        pipe_through :api_auth
+
+        post "/", BookController, :create
+        get "/:id/edit", BookController, :edit
+        put "/:id", BookController, :update
+        delete "/:id", BookController, :delete
+     end
    end
    scope "/categories" do
      get "/", CategoryController, :index
      get "/:slug", CategoryController, :show
-     post "/", CategoryController, :create
-     get "/:id/edit", CategoryController, :edit
-     put "/:id", CategoryController, :update
-     delete "/:id", CategoryController, :delete
      get "/:id/:name", CategoryController, :recommended_books
+     scope "/" do
+       pipe_through :api_auth
+
+       post "/", CategoryController, :create
+       get "/:id/edit", CategoryController, :edit
+       put "/:id", CategoryController, :update
+       delete "/:id", CategoryController, :delete
+     end
+
+
    end
    scope "/persons" do
      get "/", PersonController, :index
      get "/:slug", PersonController, :show
-     post "/", PersonController, :create
-     get "/:id/edit", PersonController, :edit
-     put "/:id", PersonController, :update
-     delete "/:id", PersonController, :delete
+     scope "/" do
+       pipe_through :api_auth
 
+       post "/", PersonController, :create
+       get "/:id/edit", PersonController, :edit
+       put "/:id", PersonController, :update
+       delete "/:id", PersonController, :delete
+     end
    end
-
+   
   end
 end

@@ -22,6 +22,13 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Config Guardian
+config :bookstore, BookstoreWeb.Guardian,
+  issuer: "bookstore",
+  ttl: { 30, :days },
+  secret_key: "aKb+t27MpCojzsOIGeXZBiXt5CCuV2lhZytn3h4GE3zcvX//FamMwU9ruReFcL2K"
+
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
