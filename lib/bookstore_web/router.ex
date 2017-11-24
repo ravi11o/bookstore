@@ -43,7 +43,6 @@ defmodule BookstoreWeb.Router do
    scope "/categories" do
      get "/", CategoryController, :index
      get "/:slug", CategoryController, :show
-     get "/:id/:name", CategoryController, :recommended_books
      scope "/" do
        pipe_through :api_auth
 
@@ -52,9 +51,9 @@ defmodule BookstoreWeb.Router do
        put "/:id", CategoryController, :update
        delete "/:id", CategoryController, :delete
      end
-
-
+     get "/:id/:name", CategoryController, :recommended_books
    end
+
    scope "/persons" do
      get "/", PersonController, :index
      get "/:slug", PersonController, :show
@@ -67,6 +66,6 @@ defmodule BookstoreWeb.Router do
        delete "/:id", PersonController, :delete
      end
    end
-   
+
   end
 end
