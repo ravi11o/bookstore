@@ -14,7 +14,7 @@ defmodule BookstoreWeb.Api.PersonController do
     render conn, "show.json", person: person
   end
 
-  def create(conn, params) do
+  def create(conn, %{"body" => params}) do
     with {:ok, person} <- Resource.insert_person(params) do
       person = person |> Repo.preload(:books)
       updated_person =

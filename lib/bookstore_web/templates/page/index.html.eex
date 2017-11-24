@@ -4,16 +4,28 @@
     <h4>Books</h4>
     <h5>GET /api/books - List of all books with category and recommendations</h5>
     <h5>POST /api/books - Post book with array of categories ids </h5>
-    <h5>GET /api/books/:slug - Single book by slug</h5>
+    <h5>GET /api/books/:slug - Single book by slug </h5>
+    <h5>GET /api/books/:id/edit - Edit Book </h5>
+    <h5>PUT /api/books/:id< - Update Book </h5>
+    <h5>DELETE /api/books/:id - Delete Book </h5>
+
+
     <h4>Categories</h4>
     <h5>GET /api/categories - List of all category</h5>
     <h5>POST /api/categories - Post category</h5>
     <h5>GET /api/categories/:slug - Single category by slug</h5>
+    <h5>GET /api/categories/:id/edit - Edit Category </h5>
+    <h5>PUT /api/categories/:id< - Update Category </h5>
+    <h5>DELETE /api/categories/:id - Delete Category </h5>
     <h5>GET /api/categories/:category_id/:person_slug - List of books from
       a category recommended by a person</h5>
+
     <h4>Persons</h4>
     <h5>GET /api/persons - List of all Person With associated books</h5>
     <h5>POST /api/persons - Post peson with array of book ids </h5>
     <h5>GET /api/persons/:slug - Single Person by slug</h5>
+    <h5>GET /api/persons/:id/edit - Edit Person </h5>
+    <h5>PUT /api/persons/:id< - Update Person </h5>
+    <h5>DELETE /api/persons/:id - Delete Person </h5>
   </div>
 </div>
