@@ -3,7 +3,7 @@ defmodule BookstoreWeb.Api.AuthController do
   import Comeonin.Bcrypt
   alias Bookstore.Accounts
 
-  def create(conn, %{"body" => %{"email" => email, "password" => password}}) do
+  def create(conn, %{"email" => email, "password" => password}) do
     admin = Accounts.get_by_email(email)
     cond do
       admin && checkpw(password, admin.hashed_password) ->
