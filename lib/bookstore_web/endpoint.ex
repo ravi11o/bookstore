@@ -38,7 +38,7 @@ defmodule BookstoreWeb.Endpoint do
     key: "_bookstore_key",
     signing_salt: "G5gNih15"
 
-  plug CORSPlug, origin: ["localhost:4000/", "localhost:8000/"]
+  plug CORSPlug, origin: ["http://localhost:4000", "http://localhost:8000"]
   plug BookstoreWeb.Router
 
   @doc """

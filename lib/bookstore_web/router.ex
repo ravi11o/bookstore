@@ -18,7 +18,7 @@ defmodule BookstoreWeb.Router do
   end
 
   scope "/", BookstoreWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
   end
@@ -29,18 +29,21 @@ defmodule BookstoreWeb.Router do
     post "/login", AuthController, :create
     get "/me", AuthController, :info
 
-    scope "/books" do
-      get "/", BookController, :index
-      get "/:slug", BookController, :show
-      scope "/" do
-        pipe_through :api_auth
+    scope "/" do
+      pipe_through :api_auth
 
+      scope "/books" do
+        get "/", BookController, :index
+        get "/:slug", BookController, :show
         post "/", BookController, :create
         get "/:id/edit", BookController, :edit
         put "/:id", BookController, :update
         delete "/:id", BookController, :delete
-     end
-   end
+      end
+
+    end
+
+
    scope "/categories" do
      get "/", CategoryController, :index
      get "/:slug", CategoryController, :show
@@ -67,6 +70,19 @@ defmodule BookstoreWeb.Router do
        delete "/:id", PersonController, :delete
      end
    end
+  end
+
+  scope "/api/v1/", BookstoreWeb.Api do
+    pipe_through :api
+
+    scope "/books" do
+      get "/", BookController, :index
+      get "/:slug", BookController, :show
+    end
+    scope "/persons" do
+      get "/", PersonController, :index
+      get "/:slug", PersonController, :show
+    end
 
   end
 end
