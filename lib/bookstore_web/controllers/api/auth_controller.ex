@@ -16,6 +16,7 @@ defmodule BookstoreWeb.Api.AuthController do
   end
 
   def info(conn, _params) do
+    IO.inspect conn
     [_, _, {"authorization", token} | _rest] =  conn.req_headers
     {:ok, resource, _claims} = BookstoreWeb.Guardian.resource_from_token(token)
     json conn, %{email: resource.email}
