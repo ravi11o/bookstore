@@ -82,7 +82,7 @@ defmodule BookstoreWeb.Router do
     scope "/categories" do
       get "/", CategoryController, :index
       get "/:slug", CategoryController, :show
-      
+    end
     scope "/persons" do
       get "/", PersonController, :index
       get "/:slug", PersonController, :show
