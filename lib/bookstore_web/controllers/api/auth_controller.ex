@@ -15,6 +15,12 @@ defmodule BookstoreWeb.Api.AuthController do
     end
   end
 
+  def info(conn, _params) do
+    [_, _, {"authorization", token} | _rest] =  conn.req_headers
+    {:ok, resource, _claims} = BookstoreWeb.Guardian.resource_from_token(token)
+    json conn, %{email: resource.email}
+  end
+
   def login_admin(conn, admin) do
     {:ok, jwt, _claims} = BookstoreWeb.Guardian.encode_and_sign(admin)
     json conn, %{jwt: jwt}
