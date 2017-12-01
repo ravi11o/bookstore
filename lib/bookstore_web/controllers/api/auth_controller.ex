@@ -17,9 +17,10 @@ defmodule BookstoreWeb.Api.AuthController do
   end
 
   def info(conn, _params) do
-    if get_req_header(conn, "authorization") !== [] do
-      token = List.first(get_req_header(conn, "authorization"))
-    end
+    token =
+      if get_req_header(conn, "authorization") !== [] do
+         List.first(get_req_header(conn, "authorization"))
+      end
     {:ok, resource, _claims} = BookstoreWeb.Guardian.resource_from_token(token)
     json conn, %{email: resource.email}
   end

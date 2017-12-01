@@ -4,6 +4,7 @@ defmodule Bookstore.Resource.Book do
   alias Bookstore.Resource.{Book, Category, BookCategory, Recommendation, Person}
   @derive {Poison.Encoder, only: [:affiliate_link, :author, :description, :name,
     :publisher, :slug, :categories, :persons]}
+    
   schema "books" do
     field :affiliate_link, :string
     field :author, :string
