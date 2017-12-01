@@ -3,6 +3,7 @@ defmodule BookstoreWeb.Api.AuthController do
   import Comeonin.Bcrypt
   alias Bookstore.Accounts
 
+
   def create(conn, %{"email" => email, "password" => password}) do
     admin = Accounts.get_by_email(email)
     cond do
@@ -16,8 +17,9 @@ defmodule BookstoreWeb.Api.AuthController do
   end
 
   def info(conn, _params) do
-    IO.inspect conn
-    [_, _, {"authorization", token} | _rest] =  conn.req_headers
+    if get_req_header(conn, "authorization") !== [] do
+      token = List.first(get_req_header(conn, "authorization"))
+    end
     {:ok, resource, _claims} = BookstoreWeb.Guardian.resource_from_token(token)
     json conn, %{email: resource.email}
   end
