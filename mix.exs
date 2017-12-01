@@ -44,7 +44,8 @@ defmodule Bookstore.Mixfile do
       {:slugger, "~> 0.2.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:guardian, "~> 1.0"}
+      {:guardian, "~> 1.0"},
+      {:cors_plug, "~> 1.4"}
     ]
   end
 
