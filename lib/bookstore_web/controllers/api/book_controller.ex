@@ -14,11 +14,11 @@ defmodule BookstoreWeb.Api.BookController do
     render conn, "show.json", book: book
   end
 
-  def create(conn, %{"body" => params}) do
-    with {:ok, book} <-  Resource.insert_book(params) do
+  def create(conn, book_params) do
+    with {:ok, book} <-  Resource.insert_book(book_params) do
       book = book |> Repo.preload([:categories, :persons])
       updated_book =
-        if categories = Map.get(params, "categories") do
+        if categories = Map.get(book_params, "categories") do
             categories
             |> Enum.map(fn(id) -> Resource.get_category_with_books(id) end)
             |> List.flatten
@@ -40,7 +40,7 @@ defmodule BookstoreWeb.Api.BookController do
 
   end
 
-  def update(conn, %{"id" => id, "body" => book_params}) do
+  def update(conn, %{"id" => id} = book_params) do
     with{:ok, book} <- Resource.update_book(id, book_params) do
       book = book |> Repo.preload([:categories, :persons])
       updated_book =

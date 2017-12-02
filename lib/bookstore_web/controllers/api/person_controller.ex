@@ -14,11 +14,11 @@ defmodule BookstoreWeb.Api.PersonController do
     render conn, "show.json", person: person
   end
 
-  def create(conn, %{"body" => params}) do
-    with {:ok, person} <- Resource.insert_person(params) do
+  def create(conn, person_params) do
+    with {:ok, person} <- Resource.insert_person(person_params) do
       person = person |> Repo.preload(:books)
       updated_person =
-        if books = Map.get(params, "books") do
+        if books = Map.get(person_params, "books") do
             books
             |> Enum.map(fn(id) -> Resource.get_book_preloaded(id) end)
             |> List.flatten
@@ -39,7 +39,8 @@ defmodule BookstoreWeb.Api.PersonController do
     end
   end
 
-  def update(conn, %{"id" => id, "body" => person_params}) do
+  def update(conn, %{"id" => id}) do
+    person_params = conn.params
     with{:ok, person} <- Resource.update_person(id, person_params) do
       person = person |> Repo.preload(:books)
       updated_person =

@@ -14,8 +14,8 @@ defmodule BookstoreWeb.Api.CategoryController do
     render conn, "show.json", category: category
   end
 
-  def create(conn, params) do
-    with {:ok, category} <- Resource.insert_category(params) do
+  def create(conn, category_params) do
+    with {:ok, category} <- Resource.insert_category(category_params) do
       category = category |> Repo.preload(:books)
       render conn, "show.json", category: category
     else
@@ -32,8 +32,7 @@ defmodule BookstoreWeb.Api.CategoryController do
 
   end
 
-  def update(conn, %{"id" => id}) do
-    category_params = conn.params
+  def update(conn, %{"id" => id} = category_params) do
     with{:ok, category} <- Resource.update_category(id, category_params) do
       render conn, "only-category.json", category: category
     else
