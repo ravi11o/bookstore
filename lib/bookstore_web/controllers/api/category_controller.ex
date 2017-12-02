@@ -30,7 +30,8 @@ defmodule BookstoreWeb.Api.CategoryController do
 
   def edit(conn, %{"id" => id}) do
     if category = Resource.get_category(id) do
-      render conn, "show.json", category: category
+      category = category |> Repo.preload(:books)
+      render conn, "edit.json", category: category
     else
       json conn, "No category with this id found"
     end
