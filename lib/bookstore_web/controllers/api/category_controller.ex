@@ -11,7 +11,7 @@ defmodule BookstoreWeb.Api.CategoryController do
 
   def show(conn, %{"id" => id}) do
     category = Resource.get_category(id)
-    render conn, "only-category.json", category: category
+    render conn, "show.json", category: category
   end
 
   def show_slug(conn, %{"slug" => slug}) do
@@ -30,7 +30,7 @@ defmodule BookstoreWeb.Api.CategoryController do
 
   def edit(conn, %{"id" => id}) do
     if category = Resource.get_category(id) do
-      render conn, "only-category.json", category: category
+      render conn, "show.json", category: category
     else
       json conn, "No category with this id found"
     end
