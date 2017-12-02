@@ -12,11 +12,12 @@ defmodule BookstoreWeb.Api.CategoryView do
   end
 
   def render("only-category.json", %{category: category}) do
-    %{
+    %{category: %{
       id: category.id,
       name: category.name,
       slug: category.slug,
       description: category.description
+        }
     }
   end
 

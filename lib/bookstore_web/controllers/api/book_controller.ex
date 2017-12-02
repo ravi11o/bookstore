@@ -9,7 +9,12 @@ defmodule BookstoreWeb.Api.BookController do
     render conn, "index.json", books: books
   end
 
-  def show(conn, %{"slug" => slug}) do
+  def show(conn, %{"id" => id}) do
+    book = Resource.get_book(id)
+    render conn, "only-book.json", book: book
+  end
+
+  def show_slug(conn, %{"slug" => slug}) do
     book = Resource.get_book_by_slug(slug)
     render conn, "show.json", book: book
   end
