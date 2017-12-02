@@ -29,7 +29,7 @@ defmodule BookstoreWeb.Api.BookController do
             |> List.flatten
             |> Resource.update_book_with_categories(book)
         end
-      render conn, "show.json", book: updated_book || book
+      render conn, "show_with_category.json", book: updated_book || book
     else
       {:error, _changeset} -> json conn, ["Book with this name already exists"]
     end

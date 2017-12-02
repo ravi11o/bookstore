@@ -6,6 +6,7 @@ defmodule BookstoreWeb.Api.BookView do
       id: book.id,
       name: book.name,
       slug: book.slug,
+      isdn: book.isdn,
       author: book.author,
       publisher: book.publisher,
       affiliate_link: book.affiliate_link,
@@ -20,6 +21,7 @@ defmodule BookstoreWeb.Api.BookView do
       id: book.id,
       name: book.name,
       slug: book.slug,
+      isdn: book.isdn,
       author: book.author,
       publisher: book.publisher,
       affiliate_link: book.affiliate_link,
@@ -33,6 +35,10 @@ defmodule BookstoreWeb.Api.BookView do
 
   def render("show.json", %{book: book}) do
     %{book: render_one(book, __MODULE__, "only-book.json")}
+  end
+
+  def render("show_with_category.json", %{book: book}) do
+    %{book: render_one(book, __MODULE__, "book.json")}
   end
 
   def render("edit.json", %{book: book, categories: categories}) do

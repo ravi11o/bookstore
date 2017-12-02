@@ -4,7 +4,7 @@ defmodule Bookstore.Resource.Book do
   alias Bookstore.Resource.{Book, Category, BookCategory, Recommendation, Person}
   @derive {Poison.Encoder, only: [:affiliate_link, :author, :description, :name,
     :publisher, :slug, :categories, :persons]}
-    
+
   schema "books" do
     field :affiliate_link, :string
     field :author, :string
@@ -21,7 +21,7 @@ defmodule Bookstore.Resource.Book do
   @doc false
   def changeset(%Book{} = book, attrs) do
     book
-    |> cast(attrs, [:name, :slug, :author, :publisher, :description, :affiliate_link])
+    |> cast(attrs, [:name, :slug, :author, :publisher, :description, :affiliate_link, :isdn])
     |> validate_required([:name, :author, :publisher, :description, :affiliate_link])
     |> unique_constraint(:slug)
     |> generate_slug
