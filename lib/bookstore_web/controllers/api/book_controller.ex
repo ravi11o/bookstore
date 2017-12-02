@@ -45,7 +45,9 @@ defmodule BookstoreWeb.Api.BookController do
 
   end
 
-  def update(conn, %{"id" => id} = book_params) do
+  def update(conn, %{"id" => id}) do
+    book_params = conn.params
+    IO.inspect book_params
     with{:ok, book} <- Resource.update_book(id, book_params) do
       book = book |> Repo.preload([:categories, :persons])
       updated_book =

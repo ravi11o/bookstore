@@ -21,15 +21,16 @@ defmodule Bookstore.Resource.Book do
 
   @doc false
   def changeset(%Book{} = book, attrs) do
+    attrs = Map.merge(attrs, generate_slug(attrs))
     book
-    |> cast(attrs, [:name, :slug, :author, :publisher, :description, :affiliate_link, :isbn])
+    |> cast(attrs, [:name, :author, :slug, :publisher, :description, :affiliate_link, :isbn])
     |> validate_required([:name, :author, :publisher, :description, :affiliate_link])
-    |> unique_constraint(:slug)
-    |> generate_slug
+
   end
 
-  defp generate_slug(changeset) do
-    name = get_change(changeset, :name)
-    put_change(changeset, :slug, Slugger.slugify_downcase(name))
+  defp generate_slug(%{"name" => name}) do
+    slug = Slugger.slugify_downcase(name)
+    %{"slug" => slug}
   end
+
 end
