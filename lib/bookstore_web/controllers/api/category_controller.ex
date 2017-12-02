@@ -39,7 +39,7 @@ defmodule BookstoreWeb.Api.CategoryController do
 
   def update(conn, %{"id" => id} = category_params) do
     with{:ok, category} <- Resource.update_category(id, category_params) do
-      render conn, "only-category.json", category: category
+      render conn, "show.json", category: category
     else
       {:error, _changeset} -> json conn, ["Category Update failed"]
     end
