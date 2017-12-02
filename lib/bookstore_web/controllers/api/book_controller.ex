@@ -11,7 +11,7 @@ defmodule BookstoreWeb.Api.BookController do
 
   def show(conn, %{"id" => id}) do
     book = Resource.get_book(id)
-    render conn, "only-book.json", book: book
+    render conn, "show.json", book: book
   end
 
   def show_slug(conn, %{"slug" => slug}) do

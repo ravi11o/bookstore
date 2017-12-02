@@ -16,7 +16,7 @@ defmodule BookstoreWeb.Api.BookView do
   end
 
   def render("only-book.json", %{book: book}) do
-    %{book: %{
+    %{
       id: book.id,
       name: book.name,
       slug: book.slug,
@@ -24,16 +24,15 @@ defmodule BookstoreWeb.Api.BookView do
       publisher: book.publisher,
       affiliate_link: book.affiliate_link,
       description: book.description
-        }
     }
   end
 
   def render("index.json", %{books: books}) do
-    %{books: render_many(books, BookstoreWeb.Api.BookView, "book.json")}
+    %{books: render_many(books, BookstoreWeb.Api.BookView, "only-book.json")}
   end
 
   def render("show.json", %{book: book}) do
-    %{book: render_one(book, __MODULE__, "book.json")}
+    %{book: render_one(book, __MODULE__, "only-book.json")}
   end
 
   def render("edit.json", %{book: book, categories: categories}) do

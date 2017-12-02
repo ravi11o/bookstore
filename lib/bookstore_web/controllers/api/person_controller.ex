@@ -11,7 +11,7 @@ defmodule BookstoreWeb.Api.PersonController do
 
   def show(conn, %{"id" => id}) do
     person = Resource.get_person(id)
-    render conn, "only-person.json", person: person
+    render conn, "show.json", person: person
   end
 
   def show_slug(conn, %{"slug" => slug}) do
