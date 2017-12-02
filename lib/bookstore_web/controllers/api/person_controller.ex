@@ -39,8 +39,7 @@ defmodule BookstoreWeb.Api.PersonController do
     end
   end
 
-  def update(conn, %{"id" => id}) do
-    person_params = conn.params
+  def update(conn, %{"id" => id} = person_params) do
     with{:ok, person} <- Resource.update_person(id, person_params) do
       person = person |> Repo.preload(:books)
       updated_person =

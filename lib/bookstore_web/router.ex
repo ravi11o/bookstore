@@ -40,39 +40,26 @@ defmodule BookstoreWeb.Router do
         put "/:id", BookController, :update
         delete "/:id", BookController, :delete
       end
-
+      scope "/categories" do
+        get "/", CategoryController, :index
+        get "/:slug", CategoryController, :show
+        post "/", CategoryController, :create
+        get "/:id/edit", CategoryController, :edit
+        put "/:id", CategoryController, :update
+        delete "/:id", CategoryController, :delete
+      end
+      scope "/persons" do
+        get "/", PersonController, :index
+        get "/:slug", PersonController, :show
+        post "/", PersonController, :create
+        get "/:id/edit", PersonController, :edit
+        put "/:id", PersonController, :update
+        delete "/:id", PersonController, :delete
+      end
     end
-
-
-   scope "/categories" do
-     get "/", CategoryController, :index
-     get "/:slug", CategoryController, :show
-     scope "/" do
-       pipe_through :api_auth
-
-       post "/", CategoryController, :create
-       get "/:id/edit", CategoryController, :edit
-       put "/:id", CategoryController, :update
-       delete "/:id", CategoryController, :delete
-     end
-     get "/:id/:name", CategoryController, :recommended_books
-   end
-
-   scope "/persons" do
-     get "/", PersonController, :index
-     get "/:slug", PersonController, :show
-     scope "/" do
-       pipe_through :api_auth
-
-       post "/", PersonController, :create
-       get "/:id/edit", PersonController, :edit
-       put "/:id", PersonController, :update
-       delete "/:id", PersonController, :delete
-     end
-   end
   end
 
-  scope "/api/v1/", BookstoreWeb.Api do
+  scope "/api/v1", BookstoreWeb.Api do
     pipe_through :api
 
     scope "/books" do
@@ -82,6 +69,7 @@ defmodule BookstoreWeb.Router do
     scope "/categories" do
       get "/", CategoryController, :index
       get "/:slug", CategoryController, :show
+      get "/:id/:name", CategoryController, :recommended_books
     end
     scope "/persons" do
       get "/", PersonController, :index
