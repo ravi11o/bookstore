@@ -13,12 +13,13 @@ defmodule BookstoreWeb.Api.PersonView do
   end
 
   def render("only-person.json", %{person: person}) do
-    %{
+    %{person: %{
       id: person.id,
       name: person.name,
       photo: person.photo,
       slug: person.slug,
       description: person.description
+        }
     }
   end
 
