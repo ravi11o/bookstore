@@ -9,6 +9,7 @@ defmodule Bookstore.Resource.Book do
     field :affiliate_link, :string
     field :author, :string
     field :description, :string
+    field :isbn, :string
     field :name, :string
     field :publisher, :string
     field :slug, :string
@@ -21,7 +22,7 @@ defmodule Bookstore.Resource.Book do
   @doc false
   def changeset(%Book{} = book, attrs) do
     book
-    |> cast(attrs, [:name, :slug, :author, :publisher, :description, :affiliate_link, :isdn])
+    |> cast(attrs, [:name, :slug, :author, :publisher, :description, :affiliate_link, :isbn])
     |> validate_required([:name, :author, :publisher, :description, :affiliate_link])
     |> unique_constraint(:slug)
     |> generate_slug

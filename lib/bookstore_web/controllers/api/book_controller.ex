@@ -37,8 +37,8 @@ defmodule BookstoreWeb.Api.BookController do
 
   def edit(conn, %{"id" => id}) do
     if book = Resource.get_book(id) do
-      categories = Resource.list_categories()
-      render conn, "edit.json", book: book, categories: categories
+      book = book |> Repo.preload([:categories, :persons])
+      render conn, "edit.json", book: book
     else
       json conn, ["No book with this id found"]
     end
@@ -55,7 +55,7 @@ defmodule BookstoreWeb.Api.BookController do
             |> List.flatten
             |> Resource.update_book_with_categories(book)
         end
-      render conn, "show.json", book: updated_book || book
+      render conn, "show_with_category.json", book: updated_book || book
     else
       {:error, _changeset} -> json conn, %{error: "Cannot Update book"}
     end

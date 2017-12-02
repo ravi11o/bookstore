@@ -30,10 +30,13 @@ defmodule BookstoreWeb.Api.PersonView do
     %{person: render_one(person, __MODULE__, "only-person.json")}
   end
 
-  def render("edit.json", %{person: person, books: books}) do
+  def render("show_with_books.json", %{person: person}) do
+    %{person: render_one(person, __MODULE__, "person.json")}
+  end
+
+  def render("edit.json", %{person: person}) do
     %{
-      person: render_one(person, __MODULE__, "only-person.json"),
-      books: render_many(books, __MODULE__, "book.json", as: :book)
+      person: render_one(person, __MODULE__, "person.json")
     }
   end
 

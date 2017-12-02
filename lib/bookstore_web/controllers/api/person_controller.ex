@@ -29,7 +29,7 @@ defmodule BookstoreWeb.Api.PersonController do
             |> List.flatten
             |> Resource.update_person_with_books(person)
         end
-      render conn, "show.json", person: updated_person || person
+      render conn, "show_with_books.json", person: updated_person || person
     else
       {:error, _changeset} -> json conn, ["This person already exists"]
     end
@@ -37,8 +37,8 @@ defmodule BookstoreWeb.Api.PersonController do
 
   def edit(conn, %{"id" => id}) do
     if person = Resource.get_person(id) do
-      books = Resource.list_books()
-      render conn, "edit.json", person: person, books: books
+      person = person |> Repo.preload(:books)
+      render conn, "edit.json", person: person
     else
       json conn, "No person found for this id"
     end
@@ -54,7 +54,7 @@ defmodule BookstoreWeb.Api.PersonController do
             |> List.flatten
             |> Resource.update_person_with_books(person)
         end
-      render conn, "show.json", person: updated_person || person
+      render conn, "show_with_books.json", person: updated_person || person
     else
       {:error, _changeset} -> json conn, ["This person already exists"]
     end
