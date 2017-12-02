@@ -9,7 +9,12 @@ defmodule BookstoreWeb.Api.CategoryController do
     render conn, "index.json", categories: categories
   end
 
-  def show(conn, %{"slug" => slug}) do
+  def show(conn, %{"id" => id}) do
+    category = Resource.get_category(id)
+    render conn, "only-category.json", category: category
+  end
+
+  def show_slug(conn, %{"slug" => slug}) do
     category = Resource.get_category_by_slug(slug)
     render conn, "show.json", category: category
   end
