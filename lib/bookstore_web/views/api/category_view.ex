@@ -42,7 +42,8 @@ defmodule BookstoreWeb.Api.CategoryView do
       name: book.name,
       author: book.author,
       description: book.description,
-      publisher: book.publisher
+      publisher: book.publisher,
+      photo: book.photo
     }
   end
 end

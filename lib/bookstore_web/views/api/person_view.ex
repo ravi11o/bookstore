@@ -44,7 +44,8 @@ defmodule BookstoreWeb.Api.PersonView do
     %{
       id: book.id,
       name: book.name,
-      author: book.author
+      author: book.author,
+      photo: book.photo
     }
   end
 end
