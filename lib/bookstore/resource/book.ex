@@ -9,6 +9,7 @@ defmodule Bookstore.Resource.Book do
     field :affiliate_link, :string
     field :author, :string
     field :description, :string
+    field :photo, :string
     field :isbn, :string
     field :name, :string
     field :publisher, :string
@@ -23,7 +24,7 @@ defmodule Bookstore.Resource.Book do
   def changeset(%Book{} = book, attrs) do
     attrs = Map.merge(attrs, generate_slug(attrs))
     book
-    |> cast(attrs, [:name, :author, :slug, :publisher, :description, :affiliate_link, :isbn])
+    |> cast(attrs, [:name, :author, :slug, :publisher, :photo, :description, :affiliate_link, :isbn])
     |> validate_required([:name, :author, :publisher, :description, :affiliate_link])
 
   end
