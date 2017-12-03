@@ -4,8 +4,13 @@ defmodule BookstoreWeb.Api.BookController do
   alias Bookstore.Resource
   alias Bookstore.Repo
 
-  def index(conn, _params) do
+  def recommended_books(conn, _params) do
     books = Resource.list_books_preloaded()
+    render conn, "index_preloaded.json", books: books
+  end
+
+  def index(conn, _params) do
+    books = Resource.list_books()
     render conn, "index.json", books: books
   end
 
@@ -16,7 +21,7 @@ defmodule BookstoreWeb.Api.BookController do
 
   def show_slug(conn, %{"slug" => slug}) do
     book = Resource.get_book_by_slug(slug)
-    render conn, "show.json", book: book
+    render conn, "edit.json", book: book
   end
 
   def create(conn, book_params) do

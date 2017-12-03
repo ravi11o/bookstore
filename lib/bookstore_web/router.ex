@@ -35,7 +35,6 @@ defmodule BookstoreWeb.Router do
       scope "/books" do
         get "/", BookController, :index
         get "/:id", BookController, :show
-        get "/slug/:slug", BookController, :show_slug
         post "/", BookController, :create
         get "/:id/edit", BookController, :edit
         put "/:id", BookController, :update
@@ -44,7 +43,6 @@ defmodule BookstoreWeb.Router do
       scope "/categories" do
         get "/", CategoryController, :index
         get "/:id", CategoryController, :show
-        get "/slug/:slug", CategoryController, :show_slug
         post "/", CategoryController, :create
         get "/:id/edit", CategoryController, :edit
         put "/:id", CategoryController, :update
@@ -53,7 +51,6 @@ defmodule BookstoreWeb.Router do
       scope "/persons" do
         get "/", PersonController, :index
         get "/:id", PersonController, :show
-        get "/slug/:slug", PersonController, :show_slug
         post "/", PersonController, :create
         get "/:id/edit", PersonController, :edit
         put "/:id", PersonController, :update
@@ -65,18 +62,19 @@ defmodule BookstoreWeb.Router do
   scope "/api/v1", BookstoreWeb.Api do
     pipe_through :api
 
+    get "/recommended-books", BookController, :recommended_books
     scope "/books" do
       get "/", BookController, :index
-      get "/:slug", BookController, :show
+      get "/:slug", BookController, :show_slug
     end
     scope "/categories" do
       get "/", CategoryController, :index
-      get "/:slug", CategoryController, :show
+      get "/:slug", CategoryController, :show_slug
       get "/:id/:name", CategoryController, :recommended_books
     end
     scope "/persons" do
       get "/", PersonController, :index
-      get "/:slug", PersonController, :show
+      get "/:slug", PersonController, :show_slug
     end
 
   end

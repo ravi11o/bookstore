@@ -32,7 +32,11 @@ defmodule BookstoreWeb.Api.BookView do
   end
 
   def render("index.json", %{books: books}) do
-    %{books: render_many(books, BookstoreWeb.Api.BookView, "only-book.json")}
+    %{books: render_many(books, __MODULE__, "only-book.json")}
+  end
+
+  def render("index_preloaded.json", %{books: books}) do
+    %{books: render_many(books, __MODULE__, "book.json")}
   end
 
   def render("show.json", %{book: book}) do
