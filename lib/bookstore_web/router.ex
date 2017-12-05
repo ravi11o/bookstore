@@ -75,6 +75,7 @@ defmodule BookstoreWeb.Router do
     end
     scope "/persons" do
       get "/", PersonController, :index
+      get "/recommendations", PersonController, :recommendation
       get "/:slug", PersonController, :show_slug
     end
 

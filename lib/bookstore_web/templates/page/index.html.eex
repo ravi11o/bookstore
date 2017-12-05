@@ -50,7 +50,8 @@
     </div>
     <h4 class="scope">Scope /api/v1 -No Authentication Required </h4>
     <div class="routes">
-      <h5>GET /persons - List of all Person With associated books</h5>
+      <h5>GET /persons - List of all Person </h5>
+      <h5>GET /persons/recommendations - List of all Person and recommended books </h5>
       <h5>GET /persons/:slug - Single Person with books by slug</h5>
     </div>
 

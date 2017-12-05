@@ -26,6 +26,10 @@ defmodule BookstoreWeb.Api.PersonView do
     %{persons: render_many(persons, __MODULE__, "only-person.json")}
   end
 
+  def render("index_preloaded.json", %{persons: persons}) do
+    %{persons: render_many(persons, __MODULE__, "person.json")}
+  end
+
   def render("show.json", %{person: person}) do
     %{person: render_one(person, __MODULE__, "only-person.json")}
   end

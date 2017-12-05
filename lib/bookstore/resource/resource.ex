@@ -66,9 +66,16 @@ defmodule Bookstore.Resource do
 ####### Person Queries #############
   def list_persons() do
     Person
+    |> Repo.all
+  end
+
+  def list_persons_preloaded() do
+    Person
     |> preload(:books)
     |> Repo.all
   end
+
+
 
   def get_person(id) do
     Person

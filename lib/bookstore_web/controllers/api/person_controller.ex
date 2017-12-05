@@ -9,6 +9,11 @@ defmodule BookstoreWeb.Api.PersonController do
     render conn, "index.json", persons: persons
   end
 
+  def recommendation(conn, _params) do
+    persons = Resource.list_persons_preloaded()
+    render conn, "index_preloaded.json", persons: persons
+  end
+
   def show(conn, %{"id" => id}) do
     person = Resource.get_person(id)
     render conn, "show.json", person: person
