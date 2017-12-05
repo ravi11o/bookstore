@@ -67,6 +67,7 @@ defmodule BookstoreWeb.Router do
       get "/", BookController, :index
       get "/:slug", BookController, :show_slug
     end
+    get "/categories-with-books", CategoryController, :categories_with_books
     scope "/categories" do
       get "/", CategoryController, :index
       get "/:slug", CategoryController, :show_slug

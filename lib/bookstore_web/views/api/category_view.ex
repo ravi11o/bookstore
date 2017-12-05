@@ -24,6 +24,10 @@ defmodule BookstoreWeb.Api.CategoryView do
     %{categories: render_many(categories, __MODULE__, "only-category.json")}
   end
 
+  def render("index_preloaded.json", %{categories: categories}) do
+    %{categories: render_many(categories, __MODULE__, "category.json")}
+  end
+
   def render("show.json", %{category: category}) do
     %{category: render_one(category, __MODULE__, "only-category.json")}
   end
